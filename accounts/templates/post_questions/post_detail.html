@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load bootstrap4 %}
+        <h1 class='posttitle loader'>{{ post.title }}</h1>
+
+        {% if post.published_date %}
+            <div class="date postdate">
+                {{ post.published_date }}
+            </div>
+
+        {% else %}
+            <a class="btn btn-outline-dark" href="{% url 'post_publish' pk=post.pk %}">Publish</a>
+        {% endif %}
+
+      <h5 class='postcontent' ><span class="detail_view_questions">{{ post.questions|safe|linebreaksbr }}</span></h5>
+
+
+      {% if user.is_authenticated %}
+          <a href="{% url 'post_edit' pk=post.pk %}"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 16" width="14" height="16"><path fill-rule="evenodd" d="M0 12v3h3l8-8-3-3-8 8zm3 2H1v-2h1v1h1v1zm10.3-9.3L12 6 9 3l1.3-1.3a.996.996 0 011.41 0l1.59 1.59c.39.39.39 1.02 0 1.41z"></path></svg></a>
+          <a href="{% url 'post_remove' pk=post.pk %}"><span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 16" width="12" height="16"><path fill-rule="evenodd" d="M7.48 8l3.75 3.75-1.48 1.48L6 9.48l-3.75 3.75-1.48-1.48L4.52 8 .77 4.25l1.48-1.48L6 6.52l3.75-3.75 1.48 1.48L7.48 8z"></path></svg></span></a>
+      {% endif %}
+
+  <hr>
+  {% for answer in post.answers.all %}
+  <br>
+      {% if user.is_authenticated %}
+
+              {{ answer.created_date }}
+              <p>{{ answer.text|safe|linebreaks }}</p>
+          <p>Posted by: <strong>{{ answer.author }}</strong></p>
+
+      {% endif %}
+  {% empty %}
+      <p>No comments posted.</p>
+  {% endfor %}
+  <hr>
+
+
+
+
+  {% for comment in post.comments.all %}
+  <br>
+      {% if user.is_authenticated or comment.approved_comment %}
+
+              {{ comment.created_date }}
+              {% if not comment.approved_comment %}
+                  <a class="" href="{% url 'comment_remove' pk=comment.pk %}">
+                    <span class="remove-comment"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill-rule="evenodd" d="M5.72 5.72a.75.75 0 011.06 0L12 10.94l5.22-5.22a.75.75 0 111.06 1.06L13.06 12l5.22 5.22a.75.75 0 11-1.06 1.06L12 13.06l-5.22 5.22a.75.75 0 01-1.06-1.06L10.94 12 5.72 6.78a.75.75 0 010-1.06z"></path></svg></span></a>
+                  <a href="{% url 'comment_approve' pk=comment.pk %}"><span class="approve-comment"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill-rule="evenodd" d="M21.03 5.72a.75.75 0 010 1.06l-11.5 11.5a.75.75 0 01-1.072-.012l-5.5-5.75a.75.75 0 111.084-1.036l4.97 5.195L19.97 5.72a.75.75 0 011.06 0z"></path></svg></span></a>
+              {% endif %}
+
+          <p>{{ comment.text|safe|linebreaks }}</p>
+          <p>Posted by: <strong>{{ comment.author }}</strong></p>
+
+      {% endif %}
+  {% empty %}
+      <p>No comments posted.</p>
+  {% endfor %}
+  <footer>
+  <a class="btn btn-primary btn-comment" href="{% url 'add_comment_to_post' pk=post.pk %}">Add comment</a>
+  <div class="container"></div>
+  </footer>
+
+
+{% endblock %}
