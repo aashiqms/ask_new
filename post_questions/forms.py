@@ -38,3 +38,5 @@ class AnswerForm(ModelForm):
 
 
 form = QuestionForm()
+
+form_A = AnswerForm()

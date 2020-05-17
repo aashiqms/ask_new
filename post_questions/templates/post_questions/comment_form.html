@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>New comment</h1>
+    <form method="POST" class="post-form">
+    {% csrf_token %}
+    {{form.as_p}}
+    <button type="submit" class="save btn btn-success">Post Comment</button>
+    </form>
+    <style>
+        body{
+            margin-top: 10px;
+        margin-left: 200px;
+        }
+    </style>
+
+
+{% endblock %}

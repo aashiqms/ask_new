@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block list_view %}
+
+
+
+    {% for post in post_list %}
+        <div class="post">
+
+            <h1><a href="{% url 'post_detail' pk=post.pk %}">{{ post.questions }}</a></h1>
+            <div class="date">
+                <p>Published on: {{ post.published_date|date:"D M Y"}}</p>
+            </div>
+                    <h6 class="answer-count btn btn-dark"><a href="{% url 'post_detail' pk=post.pk %}" style="color: white">No of answers: {{ post.answers.count }}</a></h6>
+            <a href="{% url 'add_answer_to_post' pk=post.pk %}" class="fas fa-sticky-note provide-answer btn btn-dark"> Provide Answer</a>
+<a href="{% url 'post_detail' pk=post.pk %}" class="fas fa-comment comment btn btn-dark"> Comments: {{ post.approve_comments.count }}</a>
+        </div>
+    {% endfor %}
+    <style>
+    .post{
+            margin-top: 10px;
+        margin-left: 100px;
+    }
+    .comment{
+        margin: 5px;
+    }
+    .provide-answer{
+        margin: 5px;
+    }
+
+    .answer-count{
+        margin: 5px;
+    }
+    </style>
+{% endblock %}

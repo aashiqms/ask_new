@@ -25,13 +25,13 @@
   {% for answer in post.answers.all %}
   <br>
       {% if user.is_authenticated %}
-
+            {{ answer.text }}
               {{ answer.created_date }}
               <p>{{ answer.text|safe|linebreaks }}</p>
           <p>Posted by: <strong>{{ answer.author }}</strong></p>
 
       {% endif %}
-  {% empty %}
+
       <p>No comments posted.</p>
   {% endfor %}
   <hr>
@@ -55,12 +55,19 @@
 
       {% endif %}
   {% empty %}
-      <p>No comments posted.</p>
+      <!-- <p>No comments posted.</p> -->
   {% endfor %}
   <footer>
   <a class="btn btn-primary btn-comment" href="{% url 'add_comment_to_post' pk=post.pk %}">Add comment</a>
   <div class="container"></div>
   </footer>
+    <style>
+    body{
+            margin-top: 10px;
+        margin-left: 100px;
 
+
+    }
+    </style>
 
 {% endblock %}

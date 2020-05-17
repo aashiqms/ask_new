@@ -5,8 +5,13 @@
     <form method="GET" class="post-form">
     {% csrf_token %}
     {{form.as_p}}
-    <button type="submit" class="save btn btn-default">Post Answer</button>
+    <button type="submit" class="save btn btn-success">Post Answer</button>
     </form>
 
-
+    <style>
+    body{
+         margin-top: 10px;
+        margin-left: 100px;
+    }
+    </style>
 {% endblock %}

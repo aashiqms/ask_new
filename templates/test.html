@@ -2,14 +2,23 @@
 {% block content %}
     <div class="container test">
         <ul style="list-style: none">
-          <h1>you have logged in</h1>
+          <li><h2>Welcome {{ user.username }}</h2></li>
+
+        </ul>
+    </div>
+    <hr>
+    <div class="container content-test">
+        <ul style="list-style: none">
+          <li><h2><a href="{% url 'post_new' %}">Post Question</a></h2></li>
+            <li><h2><a href="{% url 'post_list' %}">Feed</a></h2></li>
+            <li><h2><a href="{% url 'post_draft_list' %}">Drafts</a></h2></li>
 
         </ul>
     </div>
     <style>
-        .test{
+        body{
             margin-top: 10px;
-        margin-left: 200px;
+        margin-left: 100px;
 
 
     }

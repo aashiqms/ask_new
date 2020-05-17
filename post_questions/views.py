@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from .models import Post, Comment
-from .forms import QuestionForm, CommentForm
+from .forms import QuestionForm, CommentForm, AnswerForm
 
 from django.views.generic import (TemplateView, ListView,
                                   DetailView, CreateView,
@@ -89,14 +89,14 @@ def add_comment_to_post(request, pk):
 def add_answer_to_post(request, pk):
     post = get_object_or_404(Post, pk=pk)
     if request.method == "GET":
-        form = CommentForm(request.POST)
+        form = AnswerForm(request.GET)
         if form.is_valid():
             answer = form.save(commit=False)
             answer.post = post
             answer.save()
             return redirect('post_detail', pk=answer.pk)
     else:
-        form = CommentForm()
+        form = AnswerForm()
     return render(request, 'post_questions/answer_form.html', {'form': form})
 
 
